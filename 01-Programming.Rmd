@@ -1,11 +1,13 @@
 # In-Class Programming Activity, Day 1
 
-Your work goes here ...
+## Alan Morales
 
+### Task 1
 
 
 ## Test statements
 
 ```{r}
-scoreActivity::score253(1)
+library(mosaicData)
+time_now = paste("Today is ", date())
 ```

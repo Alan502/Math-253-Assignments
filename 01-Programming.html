@@ -125,11 +125,43 @@ $(document).ready(function () {
 <h2>Alan Morales</h2>
 <div id="task-1" class="section level3">
 <h3>Task 1</h3>
-<pre class="r"><code>library(mosaicData)</code></pre>
+<pre class="r"><code>library(mosaic)</code></pre>
+<pre><code>## Loading required package: dplyr</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Loading required package: mosaicData</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## The 'mosaic' package masks several functions from core packages in order to add additional features.  
+## The original behavior of these functions should not be affected by this.</code></pre>
+<pre><code>## 
+## Attaching package: 'mosaic'</code></pre>
+<pre><code>## The following object is masked from 'package:Matrix':
+## 
+##     mean</code></pre>
+<pre><code>## The following objects are masked from 'package:dplyr':
+## 
+##     count, do, tally</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     binom.test, cor, cov, D, fivenum, IQR, median, prop.test,
+##     quantile, sd, t.test, var</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     max, mean, min, prod, range, sample, sum</code></pre>
 </div>
 <div id="task-2" class="section level3">
 <h3>Task 2</h3>
-<pre class="r"><code>time_now = paste(&quot;Today is &quot;, date())</code></pre>
+<pre class="r"><code>time_now = paste(&quot;Today is &quot;, date())
+task2 = time_now</code></pre>
 </div>
 <div id="task-3" class="section level3">
 <h3>Task 3</h3>
@@ -158,9 +190,25 @@ for(lengthSize in task5pi) {
     howMany = howMany + 1
   }
 }
-piApproximation = howMany/1000 * 4</code></pre>
+piApproximation = howMany/1000 * 4
+task5pi = piApproximation</code></pre>
 <div id="test-statements" class="section level3">
 <h3>Test Statements</h3>
+<pre class="r"><code>scoreActivity::score253(1)</code></pre>
+<pre><code>## --------
+## Running test statements for day  01</code></pre>
+<pre><code>## Loading required package: scoreActivity</code></pre>
+<pre><code>## Loading required package: lazyeval</code></pre>
+<pre><code>## passed: &quot;package:mosaic&quot; %in% search()
+## passed: is.character(task2)
+## passed: grepl(&quot;^Today is&quot;, task2) &amp;&amp; grepl(&quot;201.$&quot;, task2)
+## passed: all(task3a %in% names(mosaicData::Galton))
+## passed: task3b
+## passed: task3c
+## passed: all(dim(task4) == c(2, 3))
+## passed: max(task5x) &lt;= 1 &amp;&amp; min(task5x) &gt;= 0
+## passed: max(task5y) &lt;= 1 &amp;&amp; min(task5y) &gt;= 0
+## passed: task5pi</code></pre>
 </div>
 </div>
 </div>

@@ -5,13 +5,14 @@
 ### Task 1
 
 ```{r}
-library(mosaicData)
+library(mosaic)
 ```
 
 ### Task 2
 
 ```{r}
 time_now = paste("Today is ", date())
+task2 = time_now
 ```
 
 ### Task 3
@@ -41,6 +42,11 @@ for(lengthSize in task5pi) {
   }
 }
 piApproximation = howMany/1000 * 4
+task5pi = piApproximation
 ```
 
 ### Test Statements
+
+```{r}
+scoreActivity::score253(1)
+```

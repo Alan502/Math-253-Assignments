@@ -1,7 +1,25 @@
 # In-Class Programming Activity, Day 3
 
-Your work goes here ...
+### Task 1
 
+```{r}
+library(ISLR)
+data(College, package = "ISLR")
+```
+
+### Task 2
+
+```{r}
+College$Yield = College$Enroll / College$Accept
+```
+
+### Task 3
+
+```{r}
+all_indeces = 1:nrow(College)
+train_indices = sample(x = nrow(College), size = 200)
+test_indices = setdiff()
+```
 
 
 ## Test statements

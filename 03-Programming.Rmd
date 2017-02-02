@@ -18,8 +18,41 @@ College$Yield = College$Enroll / College$Accept
 ```{r}
 all_indeces = 1:nrow(College)
 train_indices = sample(x = nrow(College), size = 200)
-test_indices = setdiff()
+test_indices = setdiff(all_indeces, train_indices)
+Train_data = College[train_indices,]
+Test_data = College[test_indices,]
 ```
+
+### Test 4
+
+```{r}
+Yield_mod1 <- lm(Yield ~ Top10perc + Outstate + Expend,
+                 data=Train_data)
+
+```
+
+
+### Test 5
+
+```{r}
+Y_train = Train_data$Yield
+fhat_train = predict(Yield_mod1, newdata = Train_data )
+sm <- summary(Yield_mod1)
+MSE_train = mean(sm$residuals^2)
+```
+
+### Test 6
+
+```{r}
+Yield_mod2 <- lm(Yield ~ Top10perc + Outstate + Expend,
+                 data=Test_data)
+
+Y_train = Test_data$Yield
+fhat_test = predict(Yield_mod2, newdata = Test_data )
+sm <- summary(Yield_mod2)
+MSE_test = mean(sm$residuals^2)
+```
+
 
 
 ## Test statements

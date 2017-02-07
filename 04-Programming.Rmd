@@ -3,6 +3,44 @@
 Your work goes here ...
 
 
+### Task 1
+
+```{r}
+plot(1, xlim = c(0, 100), ylim = c(0,100), type="n")
+```
+
+### Task 2
+```{r}
+x1 = c(10, 90, 90, 10)
+y1 = c(10, 10, 90, 90)
+x2 = c(10, 90, 90, 10, 10)
+y2 = c(10, 10, 90, 90, 10)
+plot(1, xlim = c(0, 100), ylim = c(0,100), type="n")
+lines(x2, y2, col="red")
+```
+
+### Task 3
+```{r}
+
+x3 = 50+40*cos(seq(0, 2*pi, by = 0.01))
+y3 = 60+40*sin(seq(0, 2 *pi, by = 0.01))
+plot(1, xlim = c(0, 100), ylim = c(0,100), type="n")
+lines(x3, y3, col="blue")
+```
+
+### Task 4
+
+```{r}
+x4 = c(50+40*(cos(seq(0, 2*pi, by = 0.01))), 50+40*(cos(seq(0, 2*pi, by = 0.01))))
+y4 = c(60+40*(sin(seq(0, 2 *pi, by = 0.01))), 140+40*(sin(seq(0, 2 *pi, by = 0.01))))
+plot(1, xlim = c(0, 200), ylim = c(0,200), type="n")
+lines(x4, y4, col="green")
+```
+
+### Task 5
+
+
+
 
 ## Test statements
 

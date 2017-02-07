@@ -3,6 +3,35 @@
 Your work goes here ...
 
 
+### Task 1
+```{r}
+library(mosaicData)
+nbins = 10
+```
+
+### Task 2
+```{r}
+evenly_spaced = seq(from=min(Galton$height), to=max(Galton$height),length.out=nbins+1)
+```
+
+### Task 3
+
+```{r}
+bin_counts =table(cut(Galton$height, breaks = evenly_spaced))
+```
+
+### Task 4
+
+```{r}
+xL = evenly_spaced[1:length(evenly_spaced)-1]
+xR = evenly_spaced[2:length(evenly_spaced)]
+count = as.numeric(bin_counts)
+hist_basics = data.frame(xL, xR, count)
+```
+
+
+
+
 
 ## Test statements
 

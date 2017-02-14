@@ -3,6 +3,14 @@
 Your work goes here ...
 
 
+### Task 2
+
+```{r}
+myHistogram = function() {
+  
+}
+```
+
 
 ## Test statements
 

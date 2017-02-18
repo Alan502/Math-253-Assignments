@@ -30,7 +30,7 @@ print(LL_exp(1/200))
 ### Task 4
 
 ```{r}
-rates = runif(20, 1/200, 1/50)
+rates =  1/(50:200)
 ```
 
 
@@ -44,7 +44,7 @@ results <- sapply(rates, LL_exp)
 ### Task 6
 
 ```{r}
-plot(results, 1/rates)
+plot(1/rates, results)
 ```
 
 ### Task 7

@@ -2,6 +2,63 @@
 
 Your work goes here ...
 
+```{r}
+logistic = function(x) {
+  return(exp(x) / (1 + exp(x)))
+}
+```
+
+
+
+```{r}
+library(ISLR)
+linear_combine = function(data, coefs) {
+  result <- 0
+  for (nm in names(coefs)) {
+    if (nm == "intercept") {
+      result <- result + coefs[[nm]]
+    } else {
+      stopifnot(nm %in% names(data))
+      result <- result + coefs[[nm]] * data[[nm]]
+    }
+  }
+  return(result)
+}
+linear_combine(data = Default, 
+               coefs = c(intercept = 3, balance = 0.00001, income = -0.0002))
+```
+
+
+```{r}
+LL_logistic = function(data, coefs, outcome) {
+  combination = linear_combine(data, coefs)
+  probability = logistic(combination)
+  stopifnot(length(outcome) == length(probability))
+  likelihood = rep(NA, length(outcome))
+  for(i in 1:length(probability)){
+    if(outcome[i]) {
+      likelihood[i] = probability[i]
+    } else {
+      likelihood[i] = 1-probability[i]
+    }
+  }
+  return(sum(log(likelihood)))
+}
+
+LL_logistic(data=Default, 
+            coefs = c(intercept = 1, income = -0.0001), 
+            outcome = Default$default == "Yes")
+```
+```{r}
+best_coefs = optim(c(intercept = 0, income = 0), 
+                    function(probability) LL_logistic(data = Default, coefs = probability, outcome =  Default$default=="Yes"), 
+                    control = list(fnscale =-1))
+```
+
+
+```{r}
+glm(default == "Yes" ~ income, data = Default, family = "binomial")
+```
 
 
 ## Test statements

@@ -2,28 +2,56 @@
 
 Your work goes here ...
 
+```{r}
+sigma = rbind(c(1.0, -0.7), c(-0.7, 1.0))
+sigma_inv = solve(sigma)
+test_inverse = sigma %*% sigma_inv
+```
+
+
 
 ```{r}
-poker_deck <- c(outer((10 * 2:14), 1:4, '+'))
+A = chol(sigma)
+t(A)
+t(A) %*% A == sigma
 ```
 
 
 ```{r}
-suits = function(card) {
-  return(card %% 10)
-}
+x1 = cbind(rnorm(10))
+x2 = cbind(rnorm(10))
+X = cbind(x1, x2)
+symm_matrix = t(X) %*% X
+symm_matrix/nrow(X)
+```
 
-ranks = function(card) {
-  return(card %/% 10)
-}
+
+```{r}
+w1 = cbind(rnorm(10000))
+w2 = cbind(rnorm(10000))
+W = cbind(w1, w2)
+symm_matrix = t(W) %*% W
+w_conv = symm_matrix/nrow(W)
+```
+
+
+```{r}
+A_inv = chol(sigma_inv)
+Y = X %*% A_inv
+dim(X) == dim(Y)
 ```
 
 ```{r}
-is_royal_flush = function(){
-  
-}
+Y = W %*% A
+symm_matrix = t(Y) %*% Y
+y_conv = symm_matrix/nrow(Y)
+diff = sigma - y_conv
 ```
 
+
+```{r}
+plot(Y[,1], Y[,2], col = rgb(0, 0, 0, .05))
+```
 
 ## Test statements
 

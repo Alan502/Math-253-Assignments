@@ -2,6 +2,101 @@
 
 Your work goes here ...
 
+```{r}
+poker_deck <- c(outer((10 * 2:14), 1:4, '+'))
+```
+
+
+```{r}
+suits = function(card) {
+  return(card %% 10)
+}
+
+ranks = function(card) {
+  return(card %/% 10)
+}
+
+is_flush = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(max(table(suits(hand))) == 5)
+}
+
+is_straight = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(max(diff(sort(ranks(hand)))) == 1)
+}
+
+is_straight_flush = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(is_flush(hand) && is_straight(hand))
+}
+
+is_royal_flush = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(is_straight_flush(hand) && max(ranks(hand)) == 14)
+}
+
+is_four_of_a_kind = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(max(table(ranks(hand))) == 4)
+}
+
+is_full_house = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(max(table(ranks(hand))) == 3 && length(table(ranks(hand))) == 2)
+}
+
+is_three_of_a_kind = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(max(table(ranks(hand))) == 3)
+}
+
+is_pair <- function(hand){
+  stopifnot(length(hand) == 5)
+  return(length(table(ranks(hand))) == 4)
+}
+
+is_two_pair = function(hand) {
+  stopifnot(length(hand) == 5)
+  return(sum(table(ranks(hand)) == 2) == 2)
+}
+```
+
+```{r}
+before_draw <- function(...) {
+  five_cards <- sample(poker_deck, 5)
+  if (is_royal_flush(five_cards)) {
+    return("Royal Flush")
+  }
+  if (is_straight_flush(five_cards)) {
+    return("Straight Flush")
+  }
+  if (is_four_of_a_kind(five_cards)) {
+    return("Four of a Kind")
+  }
+  if (is_full_house(five_cards)) {
+    return("Full House")
+  }
+  if (is_straight(five_cards)) {
+    return("Straight")
+  }
+  if (is_three_of_a_kind(five_cards)) {
+    return("Three of a Kind")
+  }
+  if (is_two_pair(five_cards)) {
+    return("Two Pair")
+  }
+  if (is_pair(five_cards)) {
+    return("Pair")
+  }
+  return("No hand")
+}
+```
+
+
+```{r}
+table(sapply(1:10000, FUN=before_draw))
+```
 
 
 ## Test statements

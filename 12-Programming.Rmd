@@ -1,6 +1,13 @@
 # In-Class Programming Activity, Day 12
 
-Your work goes here ...
+```{r}
+n_cases = 100
+red_mean = c(1,0)
+green_mean = c(0, -1)
+blue_mean = c(-1, 1)
+covar_red = rbind(c(3,-1.7),c(-1.7,1))
+covar_blue = rbind(c(2,1.5),c(1.5,3))
+```
 
 
 

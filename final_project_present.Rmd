@@ -1,0 +1,52 @@
+---
+title: "final_project_present"
+output: html_document
+---
+
+
+```{r}
+matches = read.csv("Match_classification.csv", header = TRUE)
+matches$home_win_or_not = ifelse(matches$outcome == 0, 0, 1)
+factor.columns = c("away_team_api_id", "home_team_api_id", "outcome", "home_X", "home_id", "home_team_fifa_api_id", "away_team_fifa_api_id", "home_win_or_not")
+matches[,factor.columns] = lapply(matches[,factor.columns], as.factor)
+matches
+```
+
+
+```{r}
+for(column.name in colnames(matches)){
+  if(column.name == "outcome"){
+    next
+  }
+  tryCatch(plot(matches[,column.name] ~ matches$outcome, main = column.name), error=function(e){})
+}
+```
+
+
+
+
+```{r}
+library(MASS)
+n = nrow(matches)
+indeces = sample(1:n, n/2)
+training = matches[indeces,]
+test = matches[-indeces,]
+```
+
+
+
+```{r}
+model.lda = lda(home_win_or_not ~ home_defenceAggression+home_chanceCreationCrossing + home_buildUpPlayPassing +  home_defencePressure + away_defenceAggression away_chanceCreationCrossing + away_buildUpPlayPassing + away_defencePressure+away_defenceAggression, data=training)
+prediction.lda = predict(model.lda, test)
+length(which(prediction.lda$class != test$home_win)) / length(test$home_win)
+```
+
+
+
+```{r}
+model.qda = qda(outcome ~ home_defenceAggression+home_chanceCreationCrossing + home_buildUpPlayPassing +  home_defencePressure + away_defenceAggression + away_chanceCreationCrossing + away_buildUpPlayPassing + away_defencePressure+away_defenceAggression, data=training)
+prediction.qda = predict(model.qda, test)
+table(test$outcome, prediction.qda$class)
+length(which(prediction.qda$class != test$outcome)) / length(test$outcome)
+```
+

@@ -1,2 +1,108 @@
 # Topic 4 Exercises: Classification
 
+
+```{r}
+library(ISLR)
+library(MASS)
+```
+
+
+## Programming Assignment
+
+## 4.7.1
+
+### a)
+```{r}
+median.mpg = median(Auto$mpg)
+Auto$mpg01 = ifelse(Auto$mpg > median.mpg, 1, 0)
+```
+
+### b)
+
+```{r}
+boxplot(Auto$acceleration ~ Auto$mpg01, main="Acceleration by mpg01")
+boxplot(Auto$horsepower ~ Auto$mpg01, main="Horsepower by mpg01")
+boxplot(Auto$displacement ~ Auto$mpg01, main="Displacement by mpg01")
+boxplot(Auto$weight ~ Auto$mpg01, main="Weight by mpg01")
+boxplot(Auto$year ~ Auto$mpg01, main="Year by mpg01")
+boxplot(Auto$cylinders ~ Auto$mpg01, main="Cylinders by mpg01")
+```
+
+Weight and displacement seem to have a strong relationship with mpg01.
+
+### c)
+
+```{r}
+n = length(Auto$mpg)
+indeces = sample(1:n, n/2)
+test = Auto[indeces,]
+training = Auto[-indeces,]
+```
+
+### d)
+
+```{r}
+model.lda = lda(mpg01 ~ weight + displacement + horsepower, data=training)
+prediction.lda = predict(model.lda, test)
+table(test$mpg01, prediction.lda$class)
+```
+```{r}
+length(which(prediction.lda$class != test$mpg01)) / length(test$mpg01)
+```
+
+The test error rate is of around 11%.
+
+### e)
+
+```{r}
+model.qda = qda(mpg01 ~ weight + displacement + horsepower, data=training)
+prediction.qda = predict(model.qda, test)
+table(test$mpg01, prediction.qda$class)
+```
+
+
+```{r}
+length(which(prediction.qda$class != test$mpg01)) / length(test$mpg01)
+```
+
+The test error rate is of around 10%
+
+### f)
+
+```{r}
+model.logistic = glm(mpg01 ~ weight + displacement + horsepower, data=training, family="binomial")
+prediction.logistic.probabilities = predict(model.logistic, test, type="response")
+prediction.logistic = ifelse(prediction.logistic.probabilities > 0.5, 1, 0)
+table(test$mpg01, prediction.logistic)
+```
+```{r}
+length(which(prediction.logistic != test$mpg01)) / length(test$mpg01)
+```
+The test error rate is of around 12%.
+
+### g)
+
+```{r}
+training.knn = training[,c("weight", "displacement", "horsepower")]
+test.knn = test[,c("weight", "displacement", "horsepower")]
+library(class)
+
+for(i in 1:10) {
+  prediction.knn = class::knn(training.knn, test.knn, training$mpg01, k=i)
+  print(paste("Test error rate for k =", i))
+  print(length(which(prediction.knn != test$mpg01)) / length(test$mpg01))
+}
+```
+It seems that the lowest test error rate is with k=5 at around 11.7%
+
+## 4.7.13
+
+
+
+## Theory Assignment
+
+## 4.7.1
+
+## 4.7.8
+
+## 4.7.9

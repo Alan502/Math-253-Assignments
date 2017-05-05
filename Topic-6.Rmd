@@ -1,2 +1,16 @@
 # Topic 6 Exercises: Selecting Model Terms
 
+
+## Theory Assignment
+
+### 6.8.1
+
+(a) Best subset selection
+
+(b) Any
+
+### 6.8.2
+
+## Applied Assignment
+
+### 6.8.9

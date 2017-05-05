@@ -9,7 +9,7 @@ library(MASS)
 
 ## Programming Assignment
 
-## 4.7.1
+## 4.7.11
 
 ### a)
 ```{r}
@@ -46,6 +46,7 @@ model.lda = lda(mpg01 ~ weight + displacement + horsepower, data=training)
 prediction.lda = predict(model.lda, test)
 table(test$mpg01, prediction.lda$class)
 ```
+
 ```{r}
 length(which(prediction.lda$class != test$mpg01)) / length(test$mpg01)
 ```
@@ -97,11 +98,62 @@ It seems that the lowest test error rate is with k=5 at around 11.7%
 
 ## 4.7.13
 
+```{r}
+library(MASS)
+Boston$crime.above.below = ifelse(Boston$crim > median(Boston$crim), 1, 0)
+for(column.name in colnames(Boston)){
+  if(column.name == "crim" || column.name == "crime.above.below" ){
+    next
+  }
+  boxplot(Boston[,column.name] ~ Boston$crime.above.below, main = column.name)
+}
+```
+
+The boxplots show that the variables with the most correlation are zn, Indus, age, rad and tax. Other variables that also seem to be correlated, tough to a lesser extent, are nox, dis, ptratio and black.
+
+We now create our training and test data sets:
+
+```{r}
+n = length(Boston$crim)
+indeces = sample(1:n, n/2)
+test = Boston[indeces,]
+training = Boston[-indeces,]
+```
+
+
+```{r}
+model.lda = lda(crime.above.below ~ zn + indus + age + rad + tax + nox + dis + ptratio + black, data=training)
+prediction.lda = predict(model.lda, test)
+print(paste("LDA test error rate is of ", length(which(prediction.lda$class != test$crime.above.below)) / length(test$crime.above.below)))
+
+model.qda = qda(crime.above.below ~ zn + indus + age + rad + tax + nox + dis + ptratio + black, data=training)
+prediction.qda = predict(model.qda, test)
+print(paste("QDA test error rate is of", length(which(prediction.qda$class != test$crime.above.below)) / length(test$crime.above.below)))
+
+
+model.logistic = glm(crime.above.below ~ zn + indus + age + rad + tax + nox + dis + ptratio + black, data=training, family="binomial")
+prediction.logistic.probabilities = predict(model.logistic, test, type="response")
+prediction.logistic = ifelse(prediction.logistic.probabilities > 0.5, 1, 0)
+print(paste("GLM test error rate is of", length(which(prediction.logistic != test$crime.above.below)) / length(test$crime.above.below)))
+
+predictors = c("zn", "indus", "age", "rad","tax","nox","dis","ptratio","black")
+training.knn = training[,predictors]
+test.knn = test[,predictors]
+library(class)
+
+for(i in 1:10) {
+  prediction.knn = class::knn(training.knn, test.knn, training$crime.above.below, k=i)
+  print(paste("Test error rate for k =", i))
+  print(length(which(prediction.knn != test$crime.above.below)) / length(test$crime.above.below))
+}
+
+```
 
 
 ## Theory Assignment
 
 ## 4.7.1
+
 
 ## 4.7.8
 

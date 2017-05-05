@@ -18,7 +18,9 @@ for(column.name in colnames(matches)){
   if(column.name == "outcome"){
     next
   }
-  tryCatch(plot(matches[,column.name] ~ matches$outcome, main = column.name), error=function(e){})
+  if(endsWith(column.name,  "Diff")) {
+    tryCatch(plot(matches[,column.name] ~ matches$outcome, main = column.name), error=function(e){})
+  }
 }
 ```
 
@@ -36,9 +38,10 @@ test = matches[-indeces,]
 
 
 ```{r}
-model.lda = lda(home_win_or_not ~ home_defenceAggression+home_chanceCreationCrossing + home_buildUpPlayPassing +  home_defencePressure + away_defenceAggression away_chanceCreationCrossing + away_buildUpPlayPassing + away_defencePressure+away_defenceAggression, data=training)
+model.lda = lda(home_win_or_not ~ home_defenceAggression+home_chanceCreationCrossing + home_buildUpPlayPassing +  home_defencePressure + away_defenceAggression + away_chanceCreationCrossing + away_buildUpPlayPassing + away_defencePressure + away_defenceAggression, data=training)
 prediction.lda = predict(model.lda, test)
 length(which(prediction.lda$class != test$home_win)) / length(test$home_win)
+model.lda
 ```
 
 
@@ -48,5 +51,6 @@ model.qda = qda(outcome ~ home_defenceAggression+home_chanceCreationCrossing + h
 prediction.qda = predict(model.qda, test)
 table(test$outcome, prediction.qda$class)
 length(which(prediction.qda$class != test$outcome)) / length(test$outcome)
+model.qda
 ```
 

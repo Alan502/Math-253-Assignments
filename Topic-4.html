@@ -163,10 +163,10 @@ prediction.lda = predict(model.lda, test)
 table(test$mpg01, prediction.lda$class)</code></pre>
 <pre><code>##    
 ##      0  1
-##   0 86 23
-##   1  3 84</code></pre>
+##   0 84 15
+##   1  1 96</code></pre>
 <pre class="r"><code>length(which(prediction.lda$class != test$mpg01)) / length(test$mpg01)</code></pre>
-<pre><code>## [1] 0.1326531</code></pre>
+<pre><code>## [1] 0.08163265</code></pre>
 <p>The test error rate is of around 11%.</p>
 </div>
 <div id="e" class="section level3">
@@ -176,10 +176,10 @@ prediction.qda = predict(model.qda, test)
 table(test$mpg01, prediction.qda$class)</code></pre>
 <pre><code>##    
 ##      0  1
-##   0 87 22
-##   1  4 83</code></pre>
+##   0 88 11
+##   1 11 86</code></pre>
 <pre class="r"><code>length(which(prediction.qda$class != test$mpg01)) / length(test$mpg01)</code></pre>
-<pre><code>## [1] 0.1326531</code></pre>
+<pre><code>## [1] 0.1122449</code></pre>
 <p>The test error rate is of around 10%</p>
 </div>
 <div id="f" class="section level3">
@@ -190,10 +190,10 @@ prediction.logistic = ifelse(prediction.logistic.probabilities &gt; 0.5, 1, 0)
 table(test$mpg01, prediction.logistic)</code></pre>
 <pre><code>##    prediction.logistic
 ##      0  1
-##   0 87 22
-##   1  4 83</code></pre>
+##   0 90  9
+##   1  8 89</code></pre>
 <pre class="r"><code>length(which(prediction.logistic != test$mpg01)) / length(test$mpg01)</code></pre>
-<pre><code>## [1] 0.1326531</code></pre>
+<pre><code>## [1] 0.08673469</code></pre>
 <p>The test error rate is of around 12%.</p>
 </div>
 <div id="g" class="section level3">
@@ -208,25 +208,25 @@ for(i in 1:10) {
   print(length(which(prediction.knn != test$mpg01)) / length(test$mpg01))
 }</code></pre>
 <pre><code>## [1] &quot;Test error rate for k = 1&quot;
-## [1] 0.1836735
-## [1] &quot;Test error rate for k = 2&quot;
-## [1] 0.1581633
-## [1] &quot;Test error rate for k = 3&quot;
-## [1] 0.122449
-## [1] &quot;Test error rate for k = 4&quot;
 ## [1] 0.1122449
+## [1] &quot;Test error rate for k = 2&quot;
+## [1] 0.1326531
+## [1] &quot;Test error rate for k = 3&quot;
+## [1] 0.127551
+## [1] &quot;Test error rate for k = 4&quot;
+## [1] 0.127551
 ## [1] &quot;Test error rate for k = 5&quot;
-## [1] 0.1377551
+## [1] 0.122449
 ## [1] &quot;Test error rate for k = 6&quot;
-## [1] 0.1479592
+## [1] 0.1173469
 ## [1] &quot;Test error rate for k = 7&quot;
-## [1] 0.1530612
+## [1] 0.1122449
 ## [1] &quot;Test error rate for k = 8&quot;
-## [1] 0.1530612
+## [1] 0.1122449
 ## [1] &quot;Test error rate for k = 9&quot;
-## [1] 0.1530612
+## [1] 0.1173469
 ## [1] &quot;Test error rate for k = 10&quot;
-## [1] 0.1530612</code></pre>
+## [1] 0.1122449</code></pre>
 <p>It seems that the lowest test error rate is with k=5 at around 11.7%</p>
 </div>
 </div>
@@ -250,11 +250,11 @@ training = Boston[-indeces,]</code></pre>
 <pre class="r"><code>model.lda = lda(crime.above.below ~ zn + indus + age + rad + tax + nox + dis + ptratio + black, data=training)
 prediction.lda = predict(model.lda, test)
 print(paste(&quot;LDA test error rate is of &quot;, length(which(prediction.lda$class != test$crime.above.below)) / length(test$crime.above.below)))</code></pre>
-<pre><code>## [1] &quot;LDA test error rate is of  0.130434782608696&quot;</code></pre>
+<pre><code>## [1] &quot;LDA test error rate is of  0.126482213438735&quot;</code></pre>
 <pre class="r"><code>model.qda = qda(crime.above.below ~ zn + indus + age + rad + tax + nox + dis + ptratio + black, data=training)
 prediction.qda = predict(model.qda, test)
 print(paste(&quot;QDA test error rate is of&quot;, length(which(prediction.qda$class != test$crime.above.below)) / length(test$crime.above.below)))</code></pre>
-<pre><code>## [1] &quot;QDA test error rate is of 0.0553359683794466&quot;</code></pre>
+<pre><code>## [1] &quot;QDA test error rate is of 0.0434782608695652&quot;</code></pre>
 <pre class="r"><code>model.logistic = glm(crime.above.below ~ zn + indus + age + rad + tax + nox + dis + ptratio + black, data=training, family=&quot;binomial&quot;)
 prediction.logistic.probabilities = predict(model.logistic, test, type=&quot;response&quot;)
 prediction.logistic = ifelse(prediction.logistic.probabilities &gt; 0.5, 1, 0)
@@ -271,25 +271,25 @@ for(i in 1:10) {
   print(length(which(prediction.knn != test$crime.above.below)) / length(test$crime.above.below))
 }</code></pre>
 <pre><code>## [1] &quot;Test error rate for k = 1&quot;
-## [1] 0.08695652
+## [1] 0.1146245
 ## [1] &quot;Test error rate for k = 2&quot;
-## [1] 0.1106719
+## [1] 0.1343874
 ## [1] &quot;Test error rate for k = 3&quot;
-## [1] 0.09486166
+## [1] 0.1185771
 ## [1] &quot;Test error rate for k = 4&quot;
-## [1] 0.09090909
-## [1] &quot;Test error rate for k = 5&quot;
-## [1] 0.09486166
-## [1] &quot;Test error rate for k = 6&quot;
-## [1] 0.1067194
-## [1] &quot;Test error rate for k = 7&quot;
-## [1] 0.1106719
-## [1] &quot;Test error rate for k = 8&quot;
 ## [1] 0.1304348
+## [1] &quot;Test error rate for k = 5&quot;
+## [1] 0.1304348
+## [1] &quot;Test error rate for k = 6&quot;
+## [1] 0.1383399
+## [1] &quot;Test error rate for k = 7&quot;
+## [1] 0.1343874
+## [1] &quot;Test error rate for k = 8&quot;
+## [1] 0.1541502
 ## [1] &quot;Test error rate for k = 9&quot;
-## [1] 0.1225296
+## [1] 0.1541502
 ## [1] &quot;Test error rate for k = 10&quot;
-## [1] 0.1106719</code></pre>
+## [1] 0.1581028</code></pre>
 </div>
 <div id="theory-assignment" class="section level2">
 <h2>Theory Assignment</h2>
@@ -299,9 +299,14 @@ for(i in 1:10) {
 </div>
 <div id="section-3" class="section level2">
 <h2>4.7.8</h2>
+<p>Logistic regression</p>
 </div>
 <div id="section-4" class="section level2">
 <h2>4.7.9</h2>
+<pre class="r"><code>0.37 / (1 + 0.37)</code></pre>
+<pre><code>## [1] 0.270073</code></pre>
+<pre class="r"><code>0.16 / (1 - 0.16)</code></pre>
+<pre><code>## [1] 0.1904762</code></pre>
 </div>
 </div>
 
